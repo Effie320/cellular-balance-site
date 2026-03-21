@@ -560,11 +560,11 @@ export default function App() {
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-indigo-500">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200" alt="Personal" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    <img src="/images/effie.jpeg" />
                   </div>
                   <div>
-                    <div className="text-white font-bold">Personal Advisor</div>
-                    <div className="text-indigo-400 text-sm">Health & Wellness Expert</div>
+                   <div className="text-white font-bold">Effie Makri</div>
+                   <div className="text-indigo-400 text-sm">Cellular Health & Wellness Advisor</div>
                   </div>
                 </div>
               </div>
@@ -693,7 +693,7 @@ export default function App() {
           </div>
           <div className="bg-slate-50 rounded-[3rem] p-12 relative">
             <img 
-              src="https://images.unsplash.com/photo-1579154273821-ad991fb9a566?auto=format&fit=crop&q=80&w=800" 
+              src="/images/lab.jpeg"
               alt="Lab" 
               className="rounded-2xl shadow-xl w-full h-full object-cover aspect-square"
               referrerPolicy="no-referrer"
@@ -738,7 +738,7 @@ export default function App() {
             </div>
             <div className="lg:w-1/2">
               <img 
-                src="https://images.unsplash.com/photo-1502086223501-7ea24c3d4e64?auto=format&fit=crop&q=80&w=800" 
+                src="/images/kids.jpeg" 
                 alt="Kids" 
                 className="rounded-[2rem] shadow-2xl w-full aspect-video object-cover"
                 referrerPolicy="no-referrer"
@@ -769,9 +769,25 @@ export default function App() {
           <div className="max-w-4xl mx-auto text-center mb-20 space-y-12">
             <div className="space-y-6">
               <div className="space-y-2">
-                <h2 className="text-4xl font-serif text-slate-900 tracking-tight">{content.form.personalName}</h2>
-                <div className="w-12 h-0.5 bg-indigo-200 mx-auto rounded-full" />
-                <p className="text-indigo-600 font-medium tracking-wide uppercase text-sm">{content.form.personalTitle}</p>
+               <div className="flex justify-center mb-6">
+  <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-indigo-500">
+    <img
+      src="/images/effie.jpeg"
+      alt="Effie"
+      className="w-full h-full object-cover"
+    />
+  </div>
+</div>
+
+<h2 className="text-4xl font-serif text-slate-900 tracking-tight">
+  {content.form.personalName}
+</h2>
+
+<div className="w-12 h-0.5 bg-indigo-200 mx-auto rounded-full" />
+
+<p className="text-indigo-600 font-medium tracking-wide uppercase text-sm">
+  {content.form.personalTitle}
+</p>
               </div>
             </div>
             <p className="text-2xl font-serif italic text-slate-700 leading-relaxed max-w-2xl mx-auto">
