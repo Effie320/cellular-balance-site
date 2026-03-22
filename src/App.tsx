@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { createClient } from "@supabase/supabase-js";
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ChevronRight, 
@@ -24,6 +25,10 @@ import {
   Sparkles
 } from 'lucide-react';
 
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
 type Language = 'el' | 'en' | 'de';
 
 interface Content {
@@ -366,6 +371,38 @@ export default function App() {
   const [lang, setLang] = useState<Language | null>(null);
   const [scrolled, setScrolled] = useState(false);
 
+  const [name, setName] = useState("");
+const [phone, setPhone] = useState("");
+const [email, setEmail] = useState("");
+const [message, setMessage] = useState("");
+const [loading, setLoading] = useState(false);
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  setLoading(true);
+
+  const { error } = await supabase.from("leads").insert([
+    {
+      name,
+      email,
+      phone,
+      message,
+    },
+  ]);
+
+  if (error) {
+    alert("Κάτι πήγε λάθος");
+  } else {
+    alert("Στάλθηκε!");
+    setName("");
+    setPhone("");
+    setEmail("");
+    setMessage("");
+  }
+
+  setLoading(false);
+};
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
