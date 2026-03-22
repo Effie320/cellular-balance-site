@@ -841,20 +841,26 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             </div>
             
             <div className="bg-white rounded-[2.5rem] p-8 md:p-12 text-slate-900 shadow-xl border border-slate-100">
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">{content.form.name}</label>
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                      <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
+                      <input
+  type="text"
+  value={name}
+  onChange={(e) => setName(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">{content.form.phone}</label>
                     <div className="relative">
                       <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                      <input type="tel" className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
+                      <input
+  type="tel"
+  value={phone}
+  onChange={(e) => setPhone(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
                     </div>
                   </div>
                 </div>
@@ -862,7 +868,10 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                   <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">{content.form.email}</label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                    <input type="email" className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
+                    <input
+  type="email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -877,7 +886,10 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                   <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">{content.form.message}</label>
                   <div className="relative">
                     <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-slate-400" />
-                    <textarea rows={4} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
+                    <textarea
+  rows={4}
+  value={message}
+  onChange={(e) => setMessage(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
                   </div>
                 </div>
                 <button className="w-full py-5 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-200 active:scale-[0.98]">
