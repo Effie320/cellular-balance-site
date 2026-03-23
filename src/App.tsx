@@ -1,6 +1,3 @@
-from pathlib import Path
-
-code = """/**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
