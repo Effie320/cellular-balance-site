@@ -376,21 +376,6 @@ export default function App() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
- const emailRes = await fetch("/api/send-email", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    name,
-    email,
-    phone,
-    message,
-  }),
-});
-
-const emailData = await emailRes.json();
-console.log("EMAIL STATUS:", emailRes.status, emailData);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -430,7 +415,50 @@ console.log("EMAIL STATUS:", emailRes.status, emailData);
     );
   }
 
-  const content = translations[lang];
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  setLoading(true);
+
+  const { error } = await supabase.from("leads").insert([
+    {
+      name,
+      email,
+      phone,
+      message,
+    },
+  ]);
+
+  if (error) {
+    alert("Κάτι πήγε λάθος");
+  } else {
+    const emailRes = await fetch("/api/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        phone,
+        message,
+      }),
+    });
+
+    const emailData = await emailRes.json();
+    console.log("EMAIL STATUS:", emailRes.status, emailData);
+
+    alert("Στάλθηκε!");
+    setName("");
+    setPhone("");
+    setEmail("");
+    setMessage("");
+  }
+
+  setLoading(false);
+}; 
+ 
+ const content = translations[lang];
 
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
