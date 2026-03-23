@@ -376,46 +376,7 @@ export default function App() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  if (!lang) {
-    return (
-      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center p-6 font-sans">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-md w-full text-center space-y-8"
-        >
-          <div className="space-y-2">
-            <h1 className="text-4xl font-serif italic text-slate-900">Choose your language</h1>
-            <p className="text-slate-500">Select to continue</p>
-          </div>
-          <div className="grid gap-4">
-            {(['el', 'en', 'de'] as Language[]).map((l) => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className="group relative overflow-hidden bg-white border border-slate-200 p-6 rounded-2xl text-xl font-medium text-slate-800 transition-all hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/10 active:scale-95"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-3">
-                  <Globe className="w-5 h-5 text-indigo-500 group-hover:rotate-12 transition-transform" />
-                  {l === 'el' ? 'Ελληνικά' : l === 'en' ? 'English' : 'Deutsch'}
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </button>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
-
- const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
 
   setLoading(true);
@@ -457,6 +418,46 @@ export default function App() {
 
   setLoading(false);
 }; 
+ 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  if (!lang) {
+    return (
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center p-6 font-sans">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-md w-full text-center space-y-8"
+        >
+          <div className="space-y-2">
+            <h1 className="text-4xl font-serif italic text-slate-900">Choose your language</h1>
+            <p className="text-slate-500">Select to continue</p>
+          </div>
+          <div className="grid gap-4">
+            {(['el', 'en', 'de'] as Language[]).map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className="group relative overflow-hidden bg-white border border-slate-200 p-6 rounded-2xl text-xl font-medium text-slate-800 transition-all hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/10 active:scale-95"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-3">
+                  <Globe className="w-5 h-5 text-indigo-500 group-hover:rotate-12 transition-transform" />
+                  {l === 'el' ? 'Ελληνικά' : l === 'en' ? 'English' : 'Deutsch'}
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              </button>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+ 
  
  const content = translations[lang];
 
