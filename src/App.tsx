@@ -1,13 +1,14 @@
-/**
+from pathlib import Path
+
+code = """/**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import React, { useState, useEffect } from 'react';
 import { createClient } from "@supabase/supabase-js";
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { 
-  ChevronRight, 
   Activity, 
   Brain, 
   Zap, 
@@ -29,6 +30,7 @@ const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
+
 type Language = 'el' | 'en' | 'de';
 
 interface Content {
@@ -294,10 +296,10 @@ const translations: Record<Language, Content> = {
         { title: "Grundlose Müdigkeit", text: "Es liegt nicht immer am Schlaf. Oft ist es die Unfähigkeit Ihrer Zellen, Energie zu produzieren." },
         { title: "Häufige Kopfschmerzen", text: "Bevor Sie es auf Stress schieben, überlegen Sie, ob Ihr Körper ein inneres Ungleichgewicht zeigt." },
         { title: "Konzentrationsmangel", text: "'Brain Fog' ist nicht nur geistige Müdigkeit, sondern oft eine Folge von Entzündungen." },
-        { title: "Angstzustände", text: "Unser psychischer Zustand ist eng με την βιολογική μας ισορροπία verbunden." },
+        { title: "Angstzustände", text: "Unser psychischer Zustand ist eng mit unserer biologischen Balance verbunden." },
         { title: "Wenig Energie", text: "Wenn Sie sich morgens 'leer' fühlen, liegt das Problem vielleicht am Zelltreibstoff." },
         { title: "Nicht ich selbst", text: "Diese subtile Veränderung der Vitalität, die man nicht benennen kann, aber jeden Tag spürt." },
-        { title: "Kind hat Schwierigkeiten", text: "Schulleistung και Aufmerksamkeit beginnen bei der richtigen Zellernährung." },
+        { title: "Kind hat Schwierigkeiten", text: "Schulleistung und Aufmerksamkeit beginnen bei der richtigen Zellernährung." },
         { title: "Ausbrüche beim Kind", text: "Plötzliche Stimmungsschwankungen bei Kindern verbergen oft ein Bedürfnis nach Balance." },
         { title: "Prävention", text: "Gesundheit ist nicht die Abwesenheit von Krankheit, sondern der Schutz des Körpers." },
         { title: "Etwas anderes", text: "Jeder Organismus ist einzigartig. Wenn Sie fühlen, dass etwas nicht stimmt, haben Sie wahrscheinlich recht." }
@@ -326,7 +328,7 @@ const translations: Record<Language, Content> = {
     },
     analysis: {
       title: "Spezialisierte Analyse",
-      text: "Eine Analyse, die einen tiefen Einblick in die interne Balance gibt και das Geschehen der letzten Monate widerspiegelt.",
+      text: "Eine Analyse, die einen tiefen Einblick in die interne Balance gibt und das Geschehen der letzten Monate widerspiegelt.",
       features: [
         "Nur wenige Tropfen Blut",
         "Unabhängiges Labor",
@@ -370,39 +372,39 @@ const translations: Record<Language, Content> = {
 export default function App() {
   const [lang, setLang] = useState<Language | null>(null);
   const [scrolled, setScrolled] = useState(false);
-
   const [name, setName] = useState("");
-const [phone, setPhone] = useState("");
-const [email, setEmail] = useState("");
-const [message, setMessage] = useState("");
-const [loading, setLoading] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  setLoading(true);
+    setLoading(true);
 
-  const { error } = await supabase.from("leads").insert([
-    {
-      name,
-      email,
-      phone,
-      message,
-    },
-  ]);
+    const { error } = await supabase.from("leads").insert([
+      {
+        name,
+        email,
+        phone,
+        message,
+      },
+    ]);
 
-  if (error) {
-    alert("Κάτι πήγε λάθος");
-  } else {
-    alert("Στάλθηκε!");
-    setName("");
-    setPhone("");
-    setEmail("");
-    setMessage("");
-  }
+    if (error) {
+      alert("Κάτι πήγε λάθος");
+    } else {
+      alert("Στάλθηκε!");
+      setName("");
+      setPhone("");
+      setEmail("");
+      setMessage("");
+    }
 
-  setLoading(false);
-};
+    setLoading(false);
+  };
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
@@ -412,7 +414,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   if (!lang) {
     return (
       <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center p-6 font-sans">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-md w-full text-center space-y-8"
@@ -445,22 +447,21 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
-      {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-md border-b border-slate-100 py-4 shadow-sm' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <div className="text-2xl font-serif italic font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
             Balance.
           </div>
           <div className="flex items-center gap-6">
-            <button 
+            <button
               onClick={() => setLang(null)}
               className="text-sm font-medium text-slate-600 hover:text-indigo-600 flex items-center gap-2 transition-colors"
             >
               <Globe className="w-4 h-4" />
               {lang.toUpperCase()}
             </button>
-            <a 
-              href="#contact" 
+            <a
+              href="#contact"
               className="hidden sm:block px-5 py-2.5 bg-indigo-600 text-white rounded-full text-sm font-semibold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200"
             >
               {content.hero.ctaSecondary}
@@ -469,13 +470,12 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-indigo-50 rounded-full blur-[120px] opacity-60" />
           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-violet-50 rounded-full blur-[120px] opacity-60" />
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -484,7 +484,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             className="space-y-8"
           >
             <div className="space-y-4">
-              <motion.span 
+              <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
@@ -509,7 +509,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               </a>
             </div>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -517,16 +517,15 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             className="relative"
           >
             <div className="aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl relative">
-              <img 
-                src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=1000" 
-                alt="Wellness" 
+              <img
+                src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=1000"
+                alt="Wellness"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent" />
             </div>
-            {/* Floating Card */}
-            <motion.div 
+            <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               className="absolute -bottom-10 -left-10 bg-white p-6 rounded-3xl shadow-xl border border-slate-100 hidden md:block max-w-[240px]"
@@ -538,7 +537,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 <div className="text-sm font-bold">Cellular Health</div>
               </div>
               <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                <motion.div 
+                <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: "85%" }}
                   transition={{ duration: 2, delay: 1 }}
@@ -551,14 +550,13 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* Symptoms Section */}
       <section id="symptoms" className="py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
             <h2 className="text-4xl md:text-5xl font-serif text-slate-900">{content.symptoms.title}</h2>
             <div className="w-20 h-1 bg-indigo-500 mx-auto rounded-full" />
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {content.symptoms.cards.map((card, idx) => (
               <motion.div
@@ -582,7 +580,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* Empathy Section */}
       <section className="py-32 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="bg-slate-900 rounded-[3rem] p-12 md:p-20 relative overflow-hidden">
@@ -597,11 +594,11 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-indigo-500">
-                    <img src="/images/effie.jpeg" />
+                    <img src="/images/effie.jpeg" alt="Effie Makri" />
                   </div>
                   <div>
-                   <div className="text-white font-bold">Effie Makri</div>
-                   <div className="text-indigo-400 text-sm">Cellular Health & Wellness Advisor</div>
+                    <div className="text-white font-bold">Effie Makri</div>
+                    <div className="text-indigo-400 text-sm">Cellular Health & Wellness Advisor</div>
                   </div>
                 </div>
               </div>
@@ -615,10 +612,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* Science Sections */}
       <section className="py-32">
         <div className="max-w-7xl mx-auto px-6 space-y-32">
-          {/* Inflammation */}
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="order-2 lg:order-1">
               <div className="aspect-video bg-indigo-50 rounded-[2rem] flex items-center justify-center p-12 relative overflow-hidden">
@@ -626,7 +621,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 <Activity className="w-32 h-32 text-indigo-200 absolute -bottom-8 -right-8 rotate-12" />
                 <div className="relative z-10 space-y-6 w-full">
                   {content.inflammation.points.map((p, i) => (
-                    <motion.div 
+                    <motion.div
                       key={i}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -648,7 +643,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             </div>
           </div>
 
-          {/* Cellular */}
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="space-y-6">
               <h2 className="text-4xl font-serif text-slate-900">{content.cellular.title}</h2>
@@ -659,7 +653,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             <div className="relative">
               <div className="absolute inset-0 bg-indigo-500/5 rounded-full blur-3xl" />
               <div className="relative aspect-square max-w-md mx-auto flex items-center justify-center">
-                <motion.div 
+                <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                   className="absolute inset-0 border-2 border-dashed border-indigo-200 rounded-full"
@@ -667,7 +661,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 <div className="w-48 h-48 bg-white rounded-full shadow-2xl flex items-center justify-center relative z-10 border border-slate-100">
                   <Activity className="w-16 h-16 text-indigo-600" />
                 </div>
-                {/* Orbital elements */}
                 {[0, 120, 240].map((deg, i) => (
                   <motion.div
                     key={i}
@@ -687,7 +680,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* Simple Tests Section */}
       <section className="py-32 bg-indigo-600 text-white">
         <div className="max-w-7xl mx-auto px-6 text-center space-y-8">
           <h2 className="text-4xl md:text-5xl font-serif max-w-3xl mx-auto leading-tight">
@@ -704,7 +696,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* Analysis Section */}
       <section className="py-32">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
           <div className="space-y-8">
@@ -729,9 +720,9 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             </div>
           </div>
           <div className="bg-slate-50 rounded-[3rem] p-12 relative">
-            <img 
+            <img
               src="/images/lab.jpeg"
-              alt="Lab" 
+              alt="Lab"
               className="rounded-2xl shadow-xl w-full h-full object-cover aspect-square"
               referrerPolicy="no-referrer"
             />
@@ -739,7 +730,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* Process Section */}
       <section className="py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-4xl font-serif text-slate-900 text-center mb-20">{content.process.title}</h2>
@@ -760,7 +750,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* Kids Section */}
       <section className="py-32">
         <div className="max-w-7xl mx-auto px-6">
           <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-[3rem] p-12 md:p-20 flex flex-col lg:flex-row gap-16 items-center">
@@ -774,9 +763,9 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               </p>
             </div>
             <div className="lg:w-1/2">
-              <img 
-                src="/images/kids.jpeg" 
-                alt="Kids" 
+              <img
+                src="/images/kids.jpeg"
+                alt="Kids"
                 className="rounded-[2rem] shadow-2xl w-full aspect-video object-cover"
                 referrerPolicy="no-referrer"
               />
@@ -785,7 +774,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* Invitation Section */}
       <section className="py-32 text-center">
         <div className="max-w-3xl mx-auto px-6 space-y-8">
           <h2 className="text-4xl font-serif text-slate-900">{content.invitation.title}</h2>
@@ -795,36 +783,35 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* Form Section */}
       <section id="contact" className="py-32 bg-slate-50 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
           <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-indigo-100 rounded-full blur-[150px]" />
           <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-violet-100 rounded-full blur-[150px]" />
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-20 space-y-12">
             <div className="space-y-6">
               <div className="space-y-2">
-               <div className="flex justify-center mb-6">
-  <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-indigo-500">
-    <img
-      src="/images/effie.jpeg"
-      alt="Effie"
-      className="w-full h-full object-cover"
-    />
-  </div>
-</div>
+                <div className="flex justify-center mb-6">
+                  <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-indigo-500">
+                    <img
+                      src="/images/effie.jpeg"
+                      alt="Effie"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
 
-<h2 className="text-4xl font-serif text-slate-900 tracking-tight">
-  {content.form.personalName}
-</h2>
+                <h2 className="text-4xl font-serif text-slate-900 tracking-tight">
+                  {content.form.personalName}
+                </h2>
 
-<div className="w-12 h-0.5 bg-indigo-200 mx-auto rounded-full" />
+                <div className="w-12 h-0.5 bg-indigo-200 mx-auto rounded-full" />
 
-<p className="text-indigo-600 font-medium tracking-wide uppercase text-sm">
-  {content.form.personalTitle}
-</p>
+                <p className="text-indigo-600 font-medium tracking-wide uppercase text-sm">
+                  {content.form.personalTitle}
+                </p>
               </div>
             </div>
             <p className="text-2xl font-serif italic text-slate-700 leading-relaxed max-w-2xl mx-auto">
@@ -839,7 +826,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 {content.form.text}
               </p>
             </div>
-            
+
             <div className="bg-white rounded-[2.5rem] p-8 md:p-12 text-slate-900 shadow-xl border border-slate-100">
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-2 gap-6">
@@ -848,9 +835,11 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                       <input
-  type="text"
-  value={name}
-  onChange={(e) => setName(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                      />
                     </div>
                   </div>
                   <div className="space-y-2">
@@ -858,9 +847,11 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                     <div className="relative">
                       <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                       <input
-  type="tel"
-  value={phone}
-  onChange={(e) => setPhone(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                      />
                     </div>
                   </div>
                 </div>
@@ -869,9 +860,11 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <input
-  type="email"
-  value={email}
-  onChange={(e) => setEmail(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                    />
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -887,13 +880,18 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                   <div className="relative">
                     <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-slate-400" />
                     <textarea
-  rows={4}
-  value={message}
-  onChange={(e) => setMessage(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" />
+                      rows={4}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                    />
                   </div>
                 </div>
-                <button className="w-full py-5 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-200 active:scale-[0.98]">
-                  {content.form.cta}
+                <button
+                  type="submit"
+                  className="w-full py-5 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-200 active:scale-[0.98]"
+                >
+                  {loading ? "Αποστολή..." : content.form.cta}
                 </button>
                 <p className="text-center text-xs text-slate-400">
                   {content.form.privacy}
@@ -904,7 +902,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="py-12 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-2xl font-serif italic font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
@@ -922,3 +919,10 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     </div>
   );
 }
+"""
+
+md = "# App.tsx (fixed)\n\nΑντικατάστησε ολόκληρο το τωρινό `App.tsx` με αυτό:\n\n```tsx\n" + code + "\n```\n"
+
+path = Path("/mnt/data/app_fixed_supabase.md")
+path.write_text(md, encoding="utf-8")
+print(f"Created {path}")
