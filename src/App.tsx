@@ -917,10 +917,3 @@ export default function App() {
     </div>
   );
 }
-"""
-
-md = "# App.tsx (fixed)\n\nΑντικατάστησε ολόκληρο το τωρινό `App.tsx` με αυτό:\n\n```tsx\n" + code + "\n```\n"
-
-path = Path("/mnt/data/app_fixed_supabase.md")
-path.write_text(md, encoding="utf-8")
-print(f"Created {path}")
