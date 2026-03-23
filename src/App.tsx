@@ -376,32 +376,45 @@ export default function App() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    setLoading(true);
+  setLoading(true);
 
-    const { error } = await supabase.from("leads").insert([
-      {
+  const { error } = await supabase.from("leads").insert([
+    {
+      name,
+      email,
+      phone,
+      message,
+    },
+  ]);
+
+  if (error) {
+    alert("Κάτι πήγε λάθος");
+  } else {
+    await fetch("/api/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         name,
         email,
         phone,
         message,
-      },
-    ]);
+      }),
+    });
 
-    if (error) {
-      alert("Κάτι πήγε λάθος");
-    } else {
-      alert("Στάλθηκε!");
-      setName("");
-      setPhone("");
-      setEmail("");
-      setMessage("");
-    }
+    alert("Στάλθηκε!");
+    setName("");
+    setPhone("");
+    setEmail("");
+    setMessage("");
+  }
 
-    setLoading(false);
-  };
+  setLoading(false);
+};
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
